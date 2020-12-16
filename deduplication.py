@@ -183,10 +183,8 @@ def num_file(file_path):
             print "可以使用 python deduplication.py set [file_path] 去重"
 
 mdxlsx = """
-it just a test
-ha ha ha ha
-it just a test
-ha ha ha ha
+项目 思考
+[XssPy](https://github.com/faizann24/XssPy) 通过mechanize模块实现表单识别
 """
 
 

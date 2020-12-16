@@ -1124,6 +1124,7 @@ SearchSettings.aspx
 SeedDispatchServer
 Select
 SelectUser.aspx
+ServiceDefinition
 SessionExample
 SessionInvalidator
 SessionServlet
@@ -2095,6 +2096,7 @@ aspstatus
 assetmaker
 asynchbeans/*
 asynchbeans/docs/*
+atom
 atomicboard/index.php?location=../../../../../../../../../../etc/passwd
 audpicker.js
 auth.inc.php
@@ -2110,6 +2112,7 @@ autohtml.php?op=modload&mainfile=x&name=/etc/passwd
 autologon.html?10514
 ava
 avreport.aspx
+axis
 axis-cgi/buffer/command.cgi
 axsurvey
 b2-include/b2edit.showposts.php
@@ -3223,6 +3226,7 @@ content/base/build/explorer/none.php?/etc/passwd
 contents.php?new_language=elvish&mode=select
 contents/extensions/asp/1
 contentserver
+context
 controller
 convert-date.php
 cookies
@@ -3309,6 +3313,7 @@ dirb_random.cgi
 dirb_random.jsp
 dirb_random.shtml
 directory.php?dir=%3Bcat%20/etc/passwd
+disco
 dit.pl
 divine
 dladvopt.aspx
@@ -3512,6 +3517,7 @@ ext.dll?MfcIsapiCommand=LoadPage&page=admin.hts%20&a0=add&a1=root&a2=%5C
 ext.ini.%00.txt
 extcounter.pl
 external
+extwsdl
 ez2000/ezadmin.cgi
 ez2000/ezboard.cgi
 ez2000/ezman.cgi
@@ -3890,10 +3896,15 @@ infos/gen/index.asp
 infos/services/index.asp
 inger
 initialize
+inquire
+inquiryapi
+inspection
 instaboard/index.cfm
 install/
 instantwebmail/message.php
 interchange/
+interface
+interfaces
 internal
 internal.sws?../../winnt/win.ini
 internet.nsf
@@ -3929,6 +3940,8 @@ java-sys/
 javadoc/
 javapg.nsf
 javax
+jboss-net
+jbossws
 jgb_eng_php3/cfooter.php3
 jigsaw/
 jmssender
@@ -3947,6 +3960,7 @@ jspstatus
 jsptest
 jsptest.jsp+
 jstl-war/index.html
+juddi
 junk.aspx
 jwsdir
 k/home?dir=/&file=../../../../../../../../etc/passwd&lang=kor
@@ -4089,6 +4103,7 @@ members/ID.xbb
 menu
 metacart/database/metacart.mdb
 metadataupdate
+methods
 mg
 mgs
 midicart.mdb
@@ -4221,6 +4236,8 @@ mysql/
 mysql/db_details_importdocsql.php?submit_show=true&do=import&docpath=../../../../../../../etc
 nForm2
 na_admin/
+name
+names
 names.nsf
 nbform.cgi
 ncl_items.html
@@ -4313,9 +4330,12 @@ open?
 opendir.php?/etc/passwd
 opendir.php?requesturl=/etc/passwd
 openmarket
+operation
+operations
 oprocmgr-status
 opt
 options.inc.php+
+oracle
 order/order.log
 order/order_log.dat
 order/order_log_v12.dat
@@ -4500,9 +4520,11 @@ pt_config.inc
 pub/english.cgi?op=rmail
 public.nsf
 public_html
+publish
 publishback.aspx
 publisher
 publisher/
+publishing
 puserinfo.nsf
 put/cgi-bin/putport.exe?SWAP&BOM&OP=none&Lang=en-US&PutHtml=../../../../../../../../etc/passwd
 pvote/add.php?question=AmIgAy&amp;o1=yes&amp;o2=yeah&amp;o3=well..yeah&amp;o4=bad%20
@@ -4515,6 +4537,7 @@ qpadmin.nsf
 qstart.nsf
 qstedit.aspx
 qstnew.aspx
+query
 query.idq?CiTemplate=../../../../../../../../../../winnt/win.ini
 queryhit.htm
 quickplace/quickplace/main.nsf
@@ -4558,6 +4581,7 @@ role.aspx
 room/save_item.php
 rpc/..%255c..%255cwinnt/system32/cmd.exe?/c+dir
 rpc/..%c0%af../..%c0%af../winnt/system32/cmd.exe?/c+dir
+rss
 rtm.log
 rubrique.asp?no=/.\
 runtime_messages.jsp
@@ -4821,8 +4845,10 @@ server.xml
 serverindex.xml
 servers
 servers/link.cgi
+service
 service.grp
 service.pwd
+services
 servlet
 servlet/*
 servlet/AdminServlet
@@ -5068,6 +5094,7 @@ supporter/index.php
 supporter/tupdate.php
 surf/scwebusers
 survey
+svce
 sw000.asp?|-|0|404_Object_Not_Found
 sys
 syslog.htm?%20
@@ -5160,8 +5187,10 @@ typo3conf/localconf.php
 uddi
 uddi/uddilistener
 uddiexplorer
+uddigui
 uddigui/*
 uddilistener
+uddisoap
 uddisoap/*
 uestbook.cgi
 uifc/MultFileUploadHandler.php+
@@ -5302,6 +5331,9 @@ webpartpageswsdl.aspx
 webpub
 websendmail
 webservice
+webserviceclient
+webserviceclient+ssl
+webservices
 webshare
 webuser.nsf
 webusers.aspx
@@ -5330,9 +5362,15 @@ workspce.aspx
 worldmusic/action/catalog
 worldmusic/action/cdlist
 wpeula.aspx
+ws
 ws-client/loanCalculation.jsp
+ws4ee
 ws_ftp.ini
+wsatom
 wsdisco.aspx
+wsdl
+wsgw
+wsil
 wswsdl.aspx
 ww-sql
 wwboard.pl
@@ -5352,6 +5390,7 @@ x.shtml
 x_stat_admin.php
 xcelerate
 xdk/
+xmethods
 xsql/demo/adhocsql/query.xsql?sql=select%20username%20from%20ALL_USERS
 xsql/demo/airport/airport.xsql?xml-stylesheet=none
 yabbse/Reminder.php
