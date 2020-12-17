@@ -4,9 +4,11 @@
 
 import sys
 import os 
+from time import sleep 
+
 
 _author = "jijue"
-_version = "v1.4"
+_version = "v1.5"
 
 example="""     
 author : %s
@@ -36,6 +38,13 @@ python deduplication.py set [file_path]
     如果想要分离成两份字典，可以用这个模式，指定用于分割的字符":"和文件名即可
 
 python deduplication.py sp [str] [file]
+
+# 指定目录 合并所有文件 并去重保存为一份文件
+
+    如果拿到一份字典文件夹，里面的字典都是同一类型的，比如都是手机号码字典，或者都是php文件名的字典，觉得单个去重太费劲了就可以使用这个模式
+
+python deduplication.py dicset [dir_path]
+最后会在该目录下会生成一个名为 __The__One__File__.txt 的文件，所以如果该目录下之前已经有该文件名的文件，请提前修改，否则会被重制(我当然可以生成随机文件名，但我懒得写，就酱，下课)
 
 
 # markdown 格式 简单表格生成：
@@ -182,6 +191,33 @@ def num_file(file_path):
         if _len_ed != 0:
             print "可以使用 python deduplication.py set [file_path] 去重"
 
+def dicset(dic_path):
+    if os.access(dic_path,os.F_OK) and os.access(dic_path,os.R_OK) and os.access(dic_path,os.W_OK):
+        os.chdir(dic_path)
+        print "\n移动至目录 %s 下\n" % (dic_path)
+        sleep(0.5)
+    else:
+        print "指定路径 %s 没有访问或读写权限，请重新确认" % (dic_path)
+        exit(0)
+    lists = list()
+    for i in os.listdir(os.getcwd()):
+        print "处理文件 %s" % (i)
+        with open(i,"r") as f:
+            res = f.readlines()
+            newres = [i.strip() for i in res]
+            newres = set(newres)
+            print "处理完毕，源文件 %d 条，去重后 %d 条" % (len(res),len(newres))
+        lists += newres ;sleep(0.1)
+    lists = set(lists)
+    print "\n所有文件处理完毕，去重后共计 %d" % (len(lists))
+    _the_one_file_ = "__The__One__File__.txt"
+    with open(_the_one_file_,"w") as f:
+        for i in lists:
+            f.write(i+"\n")
+        print "\n文件保存为 %s\n" % _the_one_file_
+
+
+
 mdxlsx = """
 项目 思考
 [XssPy](https://github.com/faizann24/XssPy) 通过mechanize模块实现表单识别
@@ -221,6 +257,8 @@ if len(sys.argv)>1:
         num_file(sys.argv[2])
     elif sys.argv[1] == "mdxlsx":
         gen_markdown_xlsx(mdxlsx)
+    elif sys.argv[1] == "dicset":
+        dicset(sys.argv[2])
     else:
         print example
         exit(0)
