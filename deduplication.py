@@ -219,8 +219,12 @@ def dicset(dic_path):
 
 
 mdxlsx = """
-项目 思考
-[XssPy](https://github.com/faizann24/XssPy) 通过mechanize模块实现表单识别
+PORT     STATE SERVICE  VERSION
+22/tcp   open  ssh      OpenSSH 8.0 (protocol 2.0)
+80/tcp   open  http     Tengine httpd
+443/tcp  open  ssl/http Tengine httpd
+3306/tcp open  mysql    MySQL 5.7.31-log
+8888/tcp open  http     Ajenti http control panel
 """
 
 
