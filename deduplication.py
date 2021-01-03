@@ -8,7 +8,7 @@ from time import sleep
 
 
 _author = "jijue"
-_version = "v1.5"
+_version = "v1.6"
 
 example="""     
 author : %s
@@ -75,7 +75,13 @@ def deduplication(file1,file2):
 
         pathfile1=os.path.dirname(file1)
 
-        file1_2=pathfile1+"/"+basefile1.split(".")[0]+"_"+basefile2.split(".")[0]+ext
+        # 相对路径下主文件也就是file1如果和本工具在同一个目录下
+        # pathfile1的值就是空，如果按照else的处理经过字符拼接会直接保存到根目录，然后报错
+        # IOError: [Errno 30] Read-only file system: '/test_ID_CARD.list'
+        if pathfile1 == "":
+            file1_2 = basefile1.split(".")[0]+"_"+basefile2.split(".")[0]+ext
+        else :
+            file1_2=pathfile1+"/"+basefile1.split(".")[0]+"_"+basefile2.split(".")[0]+ext
     else:
         exit("file1或file2路径不存在，请重试")
 
