@@ -5,10 +5,11 @@
 import sys
 import os 
 from time import sleep 
-
+import linecache
+import hashlib
 
 _author = "jijue"
-_version = "v1.6"
+_version = "v1.11_[新春特别版]"
 
 example="""     
 author : %s
@@ -53,6 +54,31 @@ python deduplication.py dicset [dir_path]
     第一步，修改变量 mdxlsx 的值
     第二步，执行命令 python deduplication.py mdxlsx
     将会直接将符合markdown格式的表格内容打印出来
+
+
+# burp intruder模块save文件提取功能：
+
+    将文件中指定的部分内容提取出来用于进一步的攻击
+    举例：
+    \"Request	Payload	       Status	Error	Timeout	Length	Comment
+     8445	867456899@qq.com   200	  false	false	1196	
+    \"
+    想要以length为参考，提取出所有length为1196的payload  
+    python deduplication.py burp burp_save.txt 6 1196 2
+
+python deduplication.py burp [filepath] [参考列位置] [参考内容] [提取内容位置(如果要提取多个字段请用","分隔)]   
+
+
+# 字典文件加密功能：
+
+    因为考虑到一些网站登陆时会对密码做一些简单的加密，比如md5(md5($pass))、md5($pass)等，所以有了这个功能  
+    直接读取字典中的所有内容，加密生成新的文件(源文件不影响)  
+
+python deduplication.py encry [filepath] [加密形式id]
+
+    目前支持的加密形式有:
+        1 : md5(md5($pass))
+        2 : md5($pass)
 """ % (_author,_version)
 
 
@@ -256,6 +282,116 @@ def gen_markdown_xlsx(string):
         xlsx_new += "|\n"
     print xlsx_new
 
+
+def burp(filenamepath,grepnum,grepstr,thenum):
+    """
+    burp处理主函数，主要负责将用户提供的提取参数交给burp_split函数处理，然后汇总进一个列表里  
+    全部写进list文件里  
+    """
+    thestr_list = thenum.strip().split(",")
+    sum_list = []
+    for i in thestr_list:
+        thestr = burp_split(filenamepath,grepnum,grepstr,i)
+        sum_list.append(thestr)
+    len_len = len(sum_list[0])
+    sums = ""
+    for i in range(len_len) :
+        for f in range(len(sum_list)):
+            sums += sum_list[f][i] + " "
+        sums += "\n"
+    with open(filenamepath+".list","w") as f:
+        f.write(sums)
+
+def burp_split(filenamepath,grepnum,grepstr,thenum):
+    """
+    burp处理核心函数，只负责从save文件中提取单个column内容
+    """
+    line_num = gen_column(filenamepath)
+    grep_num = int(grepnum)
+    the_num = int(thenum)
+    with open(filenamepath,"r") as f:
+        lines = [i.strip() for i in f.readlines()]
+    thenum_pay = []
+    for i in lines:
+        con = i.strip().split()
+        if len(con) != line_num:
+            continue
+        if con[grep_num-1] != grepstr:
+            continue
+        thenum_pay.append(con[the_num-1])
+    return thenum_pay
+
+
+def gen_column(filename):
+    """
+    获取文件中关键信息的列数  
+    接受filename一个参数  
+    return int : column
+    """
+    line_cache = linecache.getlines(filename)[4:9]
+    linecache.clearcache()
+    column_num = []
+    for i in line_cache:
+        line_i = i.strip().split()
+        column_num.append(len(line_i))
+    column_numadd = 0
+    for i in column_num:
+        column_numadd += int(i)
+    # print column_numadd;print len(column_num)
+    column = column_numadd/len(column_num)
+    return column
+# print gen_column("burp_user.txt")
+# burp("burp_user.txt",8,"true","2,3")
+# gen_column("phph1.txt")
+
+# burp_split("phph1.txt",6,6,1263,2)
+
+def _encrypt_md5_md5(one_string):
+    """
+    md5(md5($pass))方式加密
+    """
+    _md5 = hashlib.md5(one_string).hexdigest()
+    _md5_md5 = hashlib.md5(_md5).hexdigest()
+    return _md5_md5
+
+def _encrypt_md5(one_string):
+    """
+    md5($pass)方式加密
+    """
+    _md5 = hashlib.md5(one_string).hexdigest()
+    return _md5
+
+
+# 加密列表
+# 新的加密方式添加时做三步
+# 第一，写加密函数
+# 第二，添加函数名至下方字典
+# 第三，将新增加密方式写进help
+encrypt_list = {"1":"_encrypt_md5_md5","2":"_encrypt_md5"}
+
+
+# print _encrypt_md5_md5("1")
+def encrypt_core(filepath,enc_id):
+    """
+    enc_id : 类似于hashcat的使用方式，后续一定会继续增加不同的加密方式的  
+    filepath : 很好理解了  
+    直接生成与加密方式同名的list文件  
+    """
+    enc_fun = encrypt_list[str(enc_id)]
+    with open(filepath,"r") as f:
+        _list = [i.strip() for i in f.readlines()]
+        _encry_list = []
+        for i in _list:
+            _encry_list.append(eval(enc_fun)(i))
+    encry_filepath = filepath + "." + enc_fun + ".list"
+    with open(encry_filepath,"w") as f:
+        for i in _encry_list:
+            f.write(i+"\n")
+    print "加密文件 %s 已生成完毕" % (encry_filepath)
+    # return eval(enc_fun)("1")
+
+# encrypt_core("PassWordList/top100.txt",1)
+
 if len(sys.argv)>1:
     if sys.argv[1] == "de" :
         deduplication(sys.argv[2],sys.argv[3])
@@ -269,6 +405,10 @@ if len(sys.argv)>1:
         gen_markdown_xlsx(mdxlsx)
     elif sys.argv[1] == "dicset":
         dicset(sys.argv[2])
+    elif sys.argv[1] == "burp":
+        burp(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
+    elif sys.argv[1] == "encry":
+        encrypt_core(sys.argv[2],sys.argv[3])
     else:
         print example
         exit(0)
